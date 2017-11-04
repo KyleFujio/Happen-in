@@ -1,0 +1,118 @@
+<html>
+  <head>
+    <title>Place Autocomplete</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+      html, body {
+        height: 100%;
+        margin: 10px;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+      }
+      .controls {
+        margin-top: 10px;
+        border: 1px solid transparent;
+        border-radius: 2px 0 0 2px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        height: 32px;
+        outline: none;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      }
+	  .controlslarge {
+        margin-top: 10px;
+        border: 1px solid transparent;
+        border-radius: 2px 0 0 2px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        height: 80px;
+        outline: none;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      }
+
+      #pac-input {
+        background-color: #fff;
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+        margin-left: 12px;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 500px;
+      }
+
+      #pac-input:focus {
+        border-color: #4d90fe;
+      }
+
+      .pac-container {
+        font-family: Roboto;
+      }
+
+      #type-selector {
+        color: #fff;
+        background-color: #4d90fe;
+        padding: 5px 11px 0px 11px;
+      }
+
+      #type-selector label {
+        font-family: Roboto;
+        font-size: 13px;
+        font-weight: 300;
+      }
+    </style>
+  </head>
+<body>
+
+<form>
+	Event Title: <br>
+	<input id="pac-input" type="text" class = "controls" value="" placeholder = "Enter a title" ng-model="vm.name">
+	<br><br>
+	Event Category: <br>
+	<select id="pac-input" class = "controls" ng-model="vm.category">
+		<option value="Sports">Sports</option>
+		<option value="Music">Music</option>
+		<option value="Video Games">Video Games</option>
+		<option value="Board Games">Board Games</option>
+		<option value="Social">Social</option>
+		<option value="Outing">Outing</option>
+		<option value="Volunteer">Volunteer</option>
+		<option value="Study">Study</option>
+		<option value="Other">Other</option>
+	</select>
+	<br><br>
+	Event Location: <br>
+
+  <input id="pac-input" places-auto-complete class = "controls" size=80
+    ng-model="vm.address"
+    component-restrictions="{country:'us'}"
+    types="{{types}}"
+    on-place-changed="vm.placeChanged()" /> <br/>
+  <div ng-show="vm.place">
+    Address = {{vm.place.formatted_address}} <br/>
+    Location: {{vm.place.geometry.location}}<br/>
+  </div><br>
+  Map : {{vm.address}}
+  <ng-map center="{{vm.place.geometry.location}}">
+	<marker position="{{vm.place.geometry.location}}"></marker>
+	</ng-map><br>
+		
+	Event Description: <br>
+	<textarea id="pac-input" type="text" class = "controlslarge" value="" placeholder = "Enter a description" ng-model="vm.description"></textarea>
+	<br><br>
+	
+	Event Date: <br>
+	<input type="number" min="1" max="12" class="controls" placeholder="Month" ng-model="vm.month"><input type="number" min="1" max="31" class="controls" placeholder="Day" ng-model="vm.day"><br><br>
+	Event Time: <br>
+	<input type="number" min="0" max="23" class="controls" placeholder="HH" ng-model="vm.hour"><input type="number" min="0" max="59" class="controls" placeholder="MM" ng-model="vm.minute">
+	<br><br>
+	
+	Event Duration <br>
+	<input id="pac-input" type="number" class = "controls" value="" placeholder = "Enter a time in hours" ng-model="vm.duration">
+	<br><br>
+	
+	<md-button class="md-raised md-primary" ng-click="vm.submit()">Make it Happen!</md-button><br><br>
+</form>
